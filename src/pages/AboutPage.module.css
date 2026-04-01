@@ -1,0 +1,39 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.section {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.section h2 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--color-text);
+}
+
+.section p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--color-text-secondary);
+}
+
+.section ul {
+  list-style: disc;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 2;
+  color: var(--color-text-secondary);
+}

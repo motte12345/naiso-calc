@@ -1,0 +1,82 @@
+.section {
+  margin-top: 8px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 12px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 560px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cardBody {
+  flex: 1;
+}
+
+.itemName {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.itemDesc {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.links {
+  display: flex;
+  gap: 8px;
+}
+
+.amazonLink,
+.rakutenLink {
+  flex: 1;
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.amazonLink:hover,
+.rakutenLink:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+
+.amazonLink {
+  background-color: #ff9900;
+  color: #fff;
+}
+
+.rakutenLink {
+  background-color: #bf0000;
+  color: #fff;
+}

@@ -32,15 +32,15 @@ export function calculateFlooring(input: FlooringInput): FlooringResult {
 
   const floorArea = round2(roomWidth * roomDepth)
   const boardAreaRaw = (boardWidth / 1000) * (boardLength / 1000)
-  const boardArea = round2(boardAreaRaw)
+  const boardArea = round3(boardAreaRaw)
 
   const theoreticalCount = Math.ceil(floorArea / boardAreaRaw)
 
   const lossRate = layingMethod === 'parallel' ? LOSS_PARALLEL : LOSS_DIAGONAL
   const recommendedCount = Math.ceil(theoreticalCount * (1 + lossRate))
 
-  // 板サイズで判定: 幅300mm以上ならCF系、それ以下ならフローリング系
-  const isCF = boardWidth >= 300
+  // 板サイズで判定: 幅1000mm以上ならCF系（ロール材）、それ以下ならフローリング系（板材）
+  const isCF = boardWidth >= 1000
   const adhesivePerM2 = isCF ? CF_ADHESIVE_KG_PER_M2 : FLOORING_ADHESIVE_KG_PER_M2
 
   const supplies: FlooringSupplies = {
@@ -60,4 +60,8 @@ export function calculateFlooring(input: FlooringInput): FlooringResult {
 
 function round2(n: number): number {
   return Math.round(n * 100) / 100
+}
+
+function round3(n: number): number {
+  return Math.round(n * 1000) / 1000
 }

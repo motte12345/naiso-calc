@@ -17,7 +17,7 @@ function amazonSearchUrl(keyword: string): string {
 }
 
 function rakutenSearchUrl(keyword: string): string {
-  return `https://search.rakuten.co.jp/search/mall/${encodeURIComponent(keyword)}/`
+  return `https://hb.afl.rakuten.co.jp/hgc/526c1e79.46d4a30e.526c1e7a.3db24b05/?pc=https%3A%2F%2Fsearch.rakuten.co.jp%2Fsearch%2Fmall%2F${encodeURIComponent(keyword)}%2F`
 }
 
 export function AffiliateLinks({ title, items }: Props) {

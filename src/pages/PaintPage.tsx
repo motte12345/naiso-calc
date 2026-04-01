@@ -5,6 +5,8 @@ import { PageHead } from '../components/PageHead'
 import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
+import { CopyResultButton } from '../components/CopyResultButton'
+import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculatePaint } from '../calc/paint'
 import type { PaintInputMode, PaintResult, Opening } from '../calc/paint'
 import styles from './CalculatorPage.module.css'
@@ -33,6 +35,8 @@ export function PaintPage() {
   const [windows, setWindows] = useState<readonly OpeningInput[]>([])
   const [doors, setDoors] = useState<readonly OpeningInput[]>([])
   const [result, setResult] = useState<PaintResult | null>(null)
+  const [error, setError] = useState('')
+  const { resultRef, scrollToResult } = useScrollToResult()
 
   function addWindow() { setWindows([...windows, EMPTY_OPENING]) }
   function removeWindow(i: number) { setWindows(windows.filter((_, idx) => idx !== i)) }
@@ -54,17 +58,28 @@ export function PaintPage() {
 
   function handleCalculate() {
     const cc = parseInt(coatCount, 10)
-    if (!cc || cc < 1) return
+    if (!cc || cc < 1) {
+      setError('塗り回数を選択してください。')
+      return
+    }
 
     if (mode === 'direct') {
       const area = parseFloat(directArea)
-      if (!area || area <= 0) return
+      if (!area || area <= 0) {
+        setError('塗装面積を入力してください。')
+        return
+      }
+      setError('')
       setResult(calculatePaint({ mode: 'direct', directArea: area, coatCount: cc }))
     } else {
       const rw = parseFloat(roomWidth)
       const rd = parseFloat(roomDepth)
       const rh = parseFloat(roomHeight)
-      if (!rw || !rd || !rh || rw <= 0 || rd <= 0 || rh <= 0) return
+      if (!rw || !rd || !rh || rw <= 0 || rd <= 0 || rh <= 0) {
+        setError('部屋の幅・奥行・高さを入力してください。')
+        return
+      }
+      setError('')
       setResult(calculatePaint({
         mode: 'room',
         roomWidth: rw,
@@ -75,6 +90,7 @@ export function PaintPage() {
         coatCount: cc,
       }))
     }
+    scrollToResult()
   }
 
   return (
@@ -122,7 +138,7 @@ export function PaintPage() {
             </div>
 
             <h2 className={styles.sectionTitle}>
-              窓
+              窓<span className={styles.sectionHint}>（ない場合はスキップ）</span>
               <button type="button" className={styles.addButton} onClick={addWindow}>+ 追加</button>
             </h2>
             {windows.map((w, i) => (
@@ -139,7 +155,7 @@ export function PaintPage() {
             ))}
 
             <h2 className={styles.sectionTitle}>
-              ドア
+              ドア<span className={styles.sectionHint}>（ない場合はスキップ）</span>
               <button type="button" className={styles.addButton} onClick={addDoor}>+ 追加</button>
             </h2>
             {doors.map((d, i) => (
@@ -166,15 +182,22 @@ export function PaintPage() {
           </select>
         </FormField>
 
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
         <button type="button" className={styles.calcButton} onClick={handleCalculate}>
           計算する
         </button>
       </section>
 
-      <AffiliateLinks title="塗装DIYに必要な道具・材料" items={affiliateItems} />
-
       {result && (
-        <section className={styles.results}>
+        <section className={styles.results} ref={resultRef}>
+          <div className={styles.callout}>
+            <span className={styles.calloutLabel}>必要量</span>
+            <span className={styles.calloutValue}>{result.totalLiters}</span>
+            <span className={styles.calloutUnit}>L</span>
+            <span className={styles.calloutSub}>{coatCount}回塗り</span>
+          </div>
+
           <ResultCard title="計算結果">
             <table className={styles.resultTable}>
               <tbody>
@@ -225,8 +248,19 @@ export function PaintPage() {
               </tbody>
             </table>
           </ResultCard>
+
+          <CopyResultButton getText={() =>
+            `【ペンキ 計算結果】\n` +
+            `必要量: ${result.totalLiters}L（${coatCount}回塗り）\n` +
+            `塗装面積: ${result.paintArea}m²\n` +
+            `缶サイズ別: ${result.cans.map(c => `${c.label}×${c.count}`).join(' / ')}`
+          } />
+
+          <p className={styles.disclaimer}>※ 計算結果はあくまで目安です。実際の施工では下地の状態や製品仕様により異なる場合があります。</p>
         </section>
       )}
+
+      <AffiliateLinks title="塗装DIYに必要な道具・材料" items={affiliateItems} />
 
       <SeoContent>
         <h2>ペンキの必要量の計算方法</h2>

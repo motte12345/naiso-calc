@@ -23,7 +23,8 @@ function rakutenSearchUrl(keyword: string): string {
 export function AffiliateLinks({ title, items }: Props) {
   return (
     <section className={styles.section}>
-      <h3 className={styles.title}>{title}</h3>
+      <h3 className={styles.title}>{title}<span className={styles.prBadge}>PR</span></h3>
+      <p className={styles.disclosure}>※ このセクションにはアフィリエイトリンクを含みます</p>
       <div className={styles.grid}>
         {items.map(item => (
           <div key={item.name} className={styles.card}>

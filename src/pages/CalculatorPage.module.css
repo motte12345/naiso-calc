@@ -37,6 +37,12 @@
   padding-bottom: 8px;
 }
 
+.sectionHint {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
 .grid3 {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -51,7 +57,7 @@
 
 @media (max-width: 480px) {
   .grid3 {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
   }
   .grid2 {
     grid-template-columns: 1fr;
@@ -89,6 +95,9 @@
   .openingLabel {
     grid-column: 1 / -1;
   }
+  .removeButton {
+    grid-column: 1 / -1;
+  }
 }
 
 .openingLabel {
@@ -111,6 +120,16 @@
   color: #fff;
 }
 
+.errorMessage {
+  color: #d32f2f;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  padding: 8px;
+  background-color: #fde8e8;
+  border-radius: var(--radius);
+}
+
 .calcButton {
   background-color: var(--color-primary);
   color: #fff;
@@ -125,10 +144,58 @@
   background-color: var(--color-primary-dark);
 }
 
+@media (max-width: 480px) {
+  .calcButton {
+    width: 100%;
+    align-self: stretch;
+  }
+}
+
+/* Callout - 最重要数値 */
+.callout {
+  background-color: var(--color-primary-light);
+  border: 2px solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.calloutLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-primary-dark);
+}
+
+.calloutValue {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+
+.calloutUnit {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.calloutSub {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  margin-top: 4px;
+}
+
+/* Results */
 .results {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  scroll-margin-top: 80px;
 }
 
 .resultTable {
@@ -167,4 +234,11 @@
   font-weight: 400;
   color: var(--color-text-secondary);
   margin-left: 4px;
+}
+
+.disclaimer {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-align: center;
+  padding: 8px 0;
 }

@@ -5,6 +5,8 @@ import { PageHead } from '../components/PageHead'
 import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
+import { CopyResultButton } from '../components/CopyResultButton'
+import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculateWallpaper } from '../calc/wallpaper'
 import type { WallpaperType, WallpaperResult, Opening } from '../calc/wallpaper'
 import styles from './CalculatorPage.module.css'
@@ -32,6 +34,8 @@ export function WallpaperPage() {
   const [windows, setWindows] = useState<readonly OpeningInput[]>([])
   const [doors, setDoors] = useState<readonly OpeningInput[]>([])
   const [result, setResult] = useState<WallpaperResult | null>(null)
+  const [error, setError] = useState('')
+  const { resultRef, scrollToResult } = useScrollToResult()
 
   function addWindow() {
     setWindows([...windows, EMPTY_OPENING])
@@ -72,9 +76,11 @@ export function WallpaperPage() {
     const h = parseFloat(roomHeight)
 
     if (!w || !d || !h || w <= 0 || d <= 0 || h <= 0) {
+      setError('部屋の幅・奥行・高さを入力してください。')
       return
     }
 
+    setError('')
     const calculated = calculateWallpaper({
       roomWidth: w,
       roomDepth: d,
@@ -86,6 +92,7 @@ export function WallpaperPage() {
     })
 
     setResult(calculated)
+    scrollToResult()
   }
 
   return (
@@ -105,148 +112,82 @@ export function WallpaperPage() {
         <h2 className={styles.sectionTitle}>部屋の寸法</h2>
         <div className={styles.grid3}>
           <FormField label="幅" unit="m">
-            <input
-              type="number"
-              value={roomWidth}
-              onChange={e => setRoomWidth(e.target.value)}
-              placeholder="3.6"
-              min="0"
-              step="0.1"
-            />
+            <input type="number" value={roomWidth} onChange={e => setRoomWidth(e.target.value)} placeholder="3.6" min="0" step="0.1" />
           </FormField>
           <FormField label="奥行" unit="m">
-            <input
-              type="number"
-              value={roomDepth}
-              onChange={e => setRoomDepth(e.target.value)}
-              placeholder="2.7"
-              min="0"
-              step="0.1"
-            />
+            <input type="number" value={roomDepth} onChange={e => setRoomDepth(e.target.value)} placeholder="2.7" min="0" step="0.1" />
           </FormField>
           <FormField label="高さ" unit="m">
-            <input
-              type="number"
-              value={roomHeight}
-              onChange={e => setRoomHeight(e.target.value)}
-              placeholder="2.4"
-              min="0"
-              step="0.1"
-            />
+            <input type="number" value={roomHeight} onChange={e => setRoomHeight(e.target.value)} placeholder="2.4" min="0" step="0.1" />
           </FormField>
         </div>
 
         <h2 className={styles.sectionTitle}>壁紙の種類</h2>
         <div className={styles.grid2}>
           <FormField label="壁紙タイプ">
-            <select
-              value={wallpaperType}
-              onChange={e => setWallpaperType(e.target.value as WallpaperType)}
-            >
+            <select value={wallpaperType} onChange={e => setWallpaperType(e.target.value as WallpaperType)}>
               <option value="domestic">国産（幅920mm / 50mロール）</option>
               <option value="imported">輸入（幅530mm / 10mロール）</option>
             </select>
           </FormField>
           <FormField label="柄リピート" unit="cm">
-            <input
-              type="number"
-              value={patternRepeat}
-              onChange={e => setPatternRepeat(e.target.value)}
-              placeholder="0（無地）"
-              min="0"
-              step="1"
-            />
+            <input type="number" value={patternRepeat} onChange={e => setPatternRepeat(e.target.value)} placeholder="0（無地）" min="0" step="1" />
           </FormField>
         </div>
 
         <h2 className={styles.sectionTitle}>
-          窓
-          <button type="button" className={styles.addButton} onClick={addWindow}>
-            + 追加
-          </button>
+          窓<span className={styles.sectionHint}>（ない場合はスキップ）</span>
+          <button type="button" className={styles.addButton} onClick={addWindow}>+ 追加</button>
         </h2>
         {windows.map((w, i) => (
           <div key={i} className={styles.openingRow}>
             <span className={styles.openingLabel}>窓{i + 1}</span>
             <FormField label="幅" unit="m">
-              <input
-                type="number"
-                value={w.width}
-                onChange={e => updateWindow(i, 'width', e.target.value)}
-                placeholder="1.8"
-                min="0"
-                step="0.1"
-              />
+              <input type="number" value={w.width} onChange={e => updateWindow(i, 'width', e.target.value)} placeholder="1.8" min="0" step="0.1" />
             </FormField>
             <FormField label="高さ" unit="m">
-              <input
-                type="number"
-                value={w.height}
-                onChange={e => updateWindow(i, 'height', e.target.value)}
-                placeholder="1.2"
-                min="0"
-                step="0.1"
-              />
+              <input type="number" value={w.height} onChange={e => updateWindow(i, 'height', e.target.value)} placeholder="1.2" min="0" step="0.1" />
             </FormField>
-            <button
-              type="button"
-              className={styles.removeButton}
-              onClick={() => removeWindow(i)}
-            >
-              削除
-            </button>
+            <button type="button" className={styles.removeButton} onClick={() => removeWindow(i)}>削除</button>
           </div>
         ))}
 
         <h2 className={styles.sectionTitle}>
-          ドア
-          <button type="button" className={styles.addButton} onClick={addDoor}>
-            + 追加
-          </button>
+          ドア<span className={styles.sectionHint}>（ない場合はスキップ）</span>
+          <button type="button" className={styles.addButton} onClick={addDoor}>+ 追加</button>
         </h2>
         {doors.map((d, i) => (
           <div key={i} className={styles.openingRow}>
             <span className={styles.openingLabel}>ドア{i + 1}</span>
             <FormField label="幅" unit="m">
-              <input
-                type="number"
-                value={d.width}
-                onChange={e => updateDoor(i, 'width', e.target.value)}
-                placeholder="0.8"
-                min="0"
-                step="0.1"
-              />
+              <input type="number" value={d.width} onChange={e => updateDoor(i, 'width', e.target.value)} placeholder="0.8" min="0" step="0.1" />
             </FormField>
             <FormField label="高さ" unit="m">
-              <input
-                type="number"
-                value={d.height}
-                onChange={e => updateDoor(i, 'height', e.target.value)}
-                placeholder="2.0"
-                min="0"
-                step="0.1"
-              />
+              <input type="number" value={d.height} onChange={e => updateDoor(i, 'height', e.target.value)} placeholder="2.0" min="0" step="0.1" />
             </FormField>
-            <button
-              type="button"
-              className={styles.removeButton}
-              onClick={() => removeDoor(i)}
-            >
-              削除
-            </button>
+            <button type="button" className={styles.removeButton} onClick={() => removeDoor(i)}>削除</button>
           </div>
         ))}
+
+        {error && <p className={styles.errorMessage}>{error}</p>}
 
         <button type="button" className={styles.calcButton} onClick={handleCalculate}>
           計算する
         </button>
       </section>
 
-      <AffiliateLinks title="壁紙DIYに必要な道具・材料" items={affiliateItems} />
-
       {result && (
-        <section className={styles.results}>
-          <ResultCard title="計算結果">
+        <section className={styles.results} ref={resultRef}>
+          <div className={styles.callout}>
+            <span className={styles.calloutLabel}>必要ロール数</span>
+            <span className={styles.calloutValue}>{result.rollCount}</span>
+            <span className={styles.calloutUnit}>ロール</span>
+            <span className={styles.calloutSub}>
+              {result.rollWidthMm}mm幅 / {result.rollLengthM}mロール（{result.totalLength}m）
+            </span>
+          </div>
+
+          <ResultCard title="面積の内訳">
             <table className={styles.resultTable}>
               <tbody>
                 <tr>
@@ -265,9 +206,9 @@ export function WallpaperPage() {
             </table>
           </ResultCard>
 
-          <ResultCard title="必要な壁紙の量">
+          <ResultCard title="壁紙の詳細">
             <p className={styles.resultNote}>
-              ※ 巾数は部屋の周長から算出しています。開口部が大きい場合、実際より多めになることがあります。
+              ※ 巾数は部屋の周長から算出。開口部が大きい場合、実際より多めになることがあります。
             </p>
             <table className={styles.resultTable}>
               <tbody>
@@ -278,19 +219,6 @@ export function WallpaperPage() {
                 <tr>
                   <td>1巾あたりの長さ</td>
                   <td className={styles.resultValue}>{result.stripLength} m</td>
-                </tr>
-                <tr>
-                  <td>必要m数</td>
-                  <td className={styles.resultValue}>{result.totalLength} m</td>
-                </tr>
-                <tr className={styles.resultHighlight}>
-                  <td>
-                    必要ロール数
-                    <span className={styles.resultNote}>
-                      （{result.rollWidthMm}mm幅 / {result.rollLengthM}mロール）
-                    </span>
-                  </td>
-                  <td className={styles.resultValue}>{result.rollCount} ロール</td>
                 </tr>
               </tbody>
             </table>
@@ -314,8 +242,20 @@ export function WallpaperPage() {
               </tbody>
             </table>
           </ResultCard>
+
+          <CopyResultButton getText={() =>
+            `【壁紙 計算結果】\n` +
+            `必要ロール数: ${result.rollCount}ロール（${result.rollWidthMm}mm幅/${result.rollLengthM}m）\n` +
+            `必要m数: ${result.totalLength}m\n` +
+            `有効面積: ${result.effectiveArea}m²\n` +
+            `副資材: のり${result.supplies.glueKg}kg / パテ${result.supplies.puttyKg}kg`
+          } />
+
+          <p className={styles.disclaimer}>※ 計算結果はあくまで目安です。実際の施工では下地の状態や製品仕様により異なる場合があります。</p>
         </section>
       )}
+
+      <AffiliateLinks title="壁紙DIYに必要な道具・材料" items={affiliateItems} />
 
       <SeoContent>
         <h2>壁紙の必要量の計算方法</h2>

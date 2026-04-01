@@ -5,6 +5,8 @@ import { PageHead } from '../components/PageHead'
 import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
+import { CopyResultButton } from '../components/CopyResultButton'
+import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculateTile } from '../calc/tile'
 import type { TileResult } from '../calc/tile'
 import styles from './CalculatorPage.module.css'
@@ -24,6 +26,8 @@ export function TilePage() {
   const [jointWidth, setJointWidth] = useState('3')
   const [tileThickness, setTileThickness] = useState('7')
   const [result, setResult] = useState<TileResult | null>(null)
+  const [error, setError] = useState('')
+  const { resultRef, scrollToResult } = useScrollToResult()
 
   function handleCalculate() {
     const sw = parseFloat(surfaceWidth)
@@ -34,9 +38,11 @@ export function TilePage() {
     const tt = parseFloat(tileThickness)
 
     if (!sw || !sh || !tw || !th || sw <= 0 || sh <= 0 || tw <= 0 || th <= 0) {
+      setError('施工面のサイズとタイルの寸法を入力してください。')
       return
     }
 
+    setError('')
     setResult(calculateTile({
       surfaceWidth: sw,
       surfaceHeight: sh,
@@ -45,6 +51,7 @@ export function TilePage() {
       jointWidth: jw >= 0 ? jw : 0,
       tileThickness: tt > 0 ? tt : 7,
     }))
+    scrollToResult()
   }
 
   return (
@@ -89,15 +96,22 @@ export function TilePage() {
           </FormField>
         </div>
 
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
         <button type="button" className={styles.calcButton} onClick={handleCalculate}>
           計算する
         </button>
       </section>
 
-      <AffiliateLinks title="タイルDIYに必要な道具・材料" items={affiliateItems} />
-
       {result && (
-        <section className={styles.results}>
+        <section className={styles.results} ref={resultRef}>
+          <div className={styles.callout}>
+            <span className={styles.calloutLabel}>予備込み枚数</span>
+            <span className={styles.calloutValue}>{result.withSpareCount}</span>
+            <span className={styles.calloutUnit}>枚</span>
+            <span className={styles.calloutSub}>+10%予備含む</span>
+          </div>
+
           <ResultCard title="計算結果">
             <table className={styles.resultTable}>
               <tbody>
@@ -131,8 +145,19 @@ export function TilePage() {
               </tbody>
             </table>
           </ResultCard>
+
+          <CopyResultButton getText={() =>
+            `【タイル 計算結果】\n` +
+            `予備込み枚数: ${result.withSpareCount}枚（+10%）\n` +
+            `必要枚数: ${result.requiredCount}枚（${result.horizontalCount}×${result.verticalCount}）\n` +
+            `目地材: ${result.jointMaterialKg}kg`
+          } />
+
+          <p className={styles.disclaimer}>※ 計算結果はあくまで目安です。実際の施工では下地の状態や製品仕様により異なる場合があります。</p>
         </section>
       )}
+
+      <AffiliateLinks title="タイルDIYに必要な道具・材料" items={affiliateItems} />
 
       <SeoContent>
         <h2>タイル必要枚数の計算方法</h2>

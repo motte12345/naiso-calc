@@ -5,6 +5,8 @@ import { PageHead } from '../components/PageHead'
 import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
+import { CopyResultButton } from '../components/CopyResultButton'
+import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculateFlooring } from '../calc/flooring'
 import type { LayingMethod, FlooringResult } from '../calc/flooring'
 import styles from './CalculatorPage.module.css'
@@ -23,6 +25,8 @@ export function FlooringPage() {
   const [boardLength, setBoardLength] = useState('1818')
   const [layingMethod, setLayingMethod] = useState<LayingMethod>('parallel')
   const [result, setResult] = useState<FlooringResult | null>(null)
+  const [error, setError] = useState('')
+  const { resultRef, scrollToResult } = useScrollToResult()
 
   function handleCalculate() {
     const rw = parseFloat(roomWidth)
@@ -31,9 +35,11 @@ export function FlooringPage() {
     const bl = parseFloat(boardLength)
 
     if (!rw || !rd || !bw || !bl || rw <= 0 || rd <= 0 || bw <= 0 || bl <= 0) {
+      setError('部屋の幅・奥行と床材の規格を入力してください。')
       return
     }
 
+    setError('')
     setResult(calculateFlooring({
       roomWidth: rw,
       roomDepth: rd,
@@ -41,6 +47,7 @@ export function FlooringPage() {
       boardLength: bl,
       layingMethod,
     }))
+    scrollToResult()
   }
 
   return (
@@ -85,15 +92,22 @@ export function FlooringPage() {
           </select>
         </FormField>
 
+        {error && <p className={styles.errorMessage}>{error}</p>}
+
         <button type="button" className={styles.calcButton} onClick={handleCalculate}>
           計算する
         </button>
       </section>
 
-      <AffiliateLinks title="床材DIYに必要な道具・材料" items={affiliateItems} />
-
       {result && (
-        <section className={styles.results}>
+        <section className={styles.results} ref={resultRef}>
+          <div className={styles.callout}>
+            <span className={styles.calloutLabel}>推奨枚数</span>
+            <span className={styles.calloutValue}>{result.recommendedCount}</span>
+            <span className={styles.calloutUnit}>枚</span>
+            <span className={styles.calloutSub}>ロス率{result.lossRate * 100}%込み</span>
+          </div>
+
           <ResultCard title="計算結果">
             <table className={styles.resultTable}>
               <tbody>
@@ -131,8 +145,20 @@ export function FlooringPage() {
               </tbody>
             </table>
           </ResultCard>
+
+          <CopyResultButton getText={() =>
+            `【床材 計算結果】\n` +
+            `推奨枚数: ${result.recommendedCount}枚（ロス率${result.lossRate * 100}%込み）\n` +
+            `床面積: ${result.floorArea}m²\n` +
+            `理論枚数: ${result.theoreticalCount}枚\n` +
+            `${result.supplies.adhesiveType}: ${result.supplies.adhesiveKg}kg`
+          } />
+
+          <p className={styles.disclaimer}>※ 計算結果はあくまで目安です。実際の施工では下地の状態や製品仕様により異なる場合があります。</p>
         </section>
       )}
+
+      <AffiliateLinks title="床材DIYに必要な道具・材料" items={affiliateItems} />
 
       <SeoContent>
         <h2>床材の必要量の計算方法</h2>

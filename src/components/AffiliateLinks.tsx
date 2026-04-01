@@ -13,7 +13,7 @@ type Props = {
 }
 
 function amazonSearchUrl(keyword: string): string {
-  return `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}&tag=YOUR_AMAZON_TAG`
+  return `https://www.amazon.co.jp/s?k=${encodeURIComponent(keyword)}&tag=qp2026-22`
 }
 
 function rakutenSearchUrl(keyword: string): string {

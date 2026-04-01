@@ -12,8 +12,6 @@
 }
 
 .headerInner {
-  max-width: var(--max-width);
-  margin: 0 auto;
   padding: 10px 16px;
   display: flex;
   align-items: center;

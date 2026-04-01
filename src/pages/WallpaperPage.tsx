@@ -6,6 +6,8 @@ import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
 import { CopyResultButton } from '../components/CopyResultButton'
+import { Breadcrumb } from '../components/Breadcrumb'
+import { StructuredData } from '../components/StructuredData'
 import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculateWallpaper } from '../calc/wallpaper'
 import type { WallpaperType, WallpaperResult, Opening } from '../calc/wallpaper'
@@ -102,6 +104,12 @@ export function WallpaperPage() {
         description="部屋の寸法から壁紙の必要m数・ロール数を自動計算。窓やドアの除外、国産・輸入壁紙の切替、柄リピートによるロス加算に対応。"
         path="/wallpaper"
       />
+      <StructuredData
+        title="壁紙（クロス）必要量計算 | 内装材料カリキュレーター"
+        description="部屋の寸法から壁紙の必要m数・ロール数を自動計算。窓やドアの除外、国産・輸入壁紙の切替、柄リピートによるロス加算に対応。"
+        path="/wallpaper"
+      />
+      <Breadcrumb items={[{ label: '壁紙（クロス）必要量計算', path: '/wallpaper' }]} />
       <h1 className={styles.title}>壁紙（クロス）必要量計算</h1>
       <p className={styles.description}>
         部屋の寸法と窓・ドアのサイズを入力して、必要な壁紙の量を計算します。

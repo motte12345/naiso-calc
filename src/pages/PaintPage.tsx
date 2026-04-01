@@ -6,6 +6,8 @@ import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
 import { CopyResultButton } from '../components/CopyResultButton'
+import { Breadcrumb } from '../components/Breadcrumb'
+import { StructuredData } from '../components/StructuredData'
 import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculatePaint } from '../calc/paint'
 import type { PaintInputMode, PaintResult, Opening } from '../calc/paint'
@@ -100,6 +102,12 @@ export function PaintPage() {
         description="塗装面積と塗り回数から必要なペンキの量を自動計算。0.7L・1.6L・4L缶のサイズ別必要個数も表示。部屋の寸法からの面積算出にも対応。"
         path="/paint"
       />
+      <StructuredData
+        title="ペンキ・塗料の必要量計算 | 内装材料カリキュレーター"
+        description="塗装面積と塗り回数から必要なペンキの量を自動計算。0.7L・1.6L・4L缶のサイズ別必要個数も表示。部屋の寸法からの面積算出にも対応。"
+        path="/paint"
+      />
+      <Breadcrumb items={[{ label: 'ペンキ・塗料の必要量計算', path: '/paint' }]} />
       <h1 className={styles.title}>ペンキ・塗料の必要量計算</h1>
       <p className={styles.description}>
         塗装面積と塗り回数から、必要なペンキの量と缶のサイズ別必要個数を計算します。

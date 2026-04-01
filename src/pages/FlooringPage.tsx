@@ -6,6 +6,8 @@ import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
 import { CopyResultButton } from '../components/CopyResultButton'
+import { Breadcrumb } from '../components/Breadcrumb'
+import { StructuredData } from '../components/StructuredData'
 import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculateFlooring } from '../calc/flooring'
 import type { LayingMethod, FlooringResult } from '../calc/flooring'
@@ -57,6 +59,12 @@ export function FlooringPage() {
         description="部屋の面積と床材の規格から必要枚数を自動計算。並行貼り・斜め貼りのロス率にも対応。フローリング・クッションフロアのDIYに。"
         path="/flooring"
       />
+      <StructuredData
+        title="床材（フローリング・CF）必要量計算 | 内装材料カリキュレーター"
+        description="部屋の面積と床材の規格から必要枚数を自動計算。並行貼り・斜め貼りのロス率にも対応。フローリング・クッションフロアのDIYに。"
+        path="/flooring"
+      />
+      <Breadcrumb items={[{ label: '床材（フローリング・CF）必要量計算', path: '/flooring' }]} />
       <h1 className={styles.title}>床材（フローリング・CF）必要量計算</h1>
       <p className={styles.description}>
         部屋の寸法と床材の規格を入力して、必要な枚数を計算します。

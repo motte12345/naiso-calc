@@ -1,0 +1,40 @@
+.breadcrumb {
+  margin-bottom: 12px;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.link {
+  color: var(--color-text-secondary, #6b7280);
+  text-decoration: none;
+}
+
+.link:hover {
+  text-decoration: underline;
+  color: var(--color-primary, #2563eb);
+}
+
+.separator {
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 12px;
+}
+
+.current {
+  color: var(--color-text-secondary, #6b7280);
+}

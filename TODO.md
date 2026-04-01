@@ -17,6 +17,16 @@
 - [x] ペンキ計算（ロジック + UI + テスト）— 6テスト通過
 - [x] aboutページ
 
+## Phase 3.5: SSG（静的サイト生成）
+
+- [x] tsx をdevDependenciesにインストール
+- [x] scripts/prerender.ts を作成
+- [x] scripts/css-mock.js (ローダーフック) を作成
+- [x] scripts/register-hooks.js (register() API ラッパー) を作成
+- [x] scripts/prerender-runner.mjs (Windows対応 env設定ラッパー) を作成
+- [x] package.json の build スクリプトを更新
+- [x] ビルド動作確認（npm run build 成功、全6ページ生成確認）
+
 ## Phase 3: SEO・収益化
 
 - [x] SEO補足コンテンツ（全4ツールに使い方・コツのテキスト追加）

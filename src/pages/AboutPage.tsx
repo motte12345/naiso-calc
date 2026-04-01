@@ -1,4 +1,6 @@
 import { PageHead } from '../components/PageHead'
+import { Breadcrumb } from '../components/Breadcrumb'
+import { StructuredData } from '../components/StructuredData'
 import styles from './AboutPage.module.css'
 
 export function AboutPage() {
@@ -9,6 +11,12 @@ export function AboutPage() {
         description="内装材料カリキュレーターについて。DIYやリフォームで必要な壁紙・床材・タイル・ペンキの量を計算する無料ツール。"
         path="/about"
       />
+      <StructuredData
+        title="サイトについて | 内装材料カリキュレーター"
+        description="内装材料カリキュレーターについて。DIYやリフォームで必要な壁紙・床材・タイル・ペンキの量を計算する無料ツール。"
+        path="/about"
+      />
+      <Breadcrumb items={[{ label: 'サイトについて', path: '/about' }]} />
       <h1 className={styles.title}>サイトについて</h1>
 
       <section className={styles.section}>

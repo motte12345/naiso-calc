@@ -6,6 +6,8 @@ import { AffiliateLinks } from '../components/AffiliateLinks'
 import type { AffiliateItem } from '../components/AffiliateLinks'
 import { SeoContent } from '../components/SeoContent'
 import { CopyResultButton } from '../components/CopyResultButton'
+import { Breadcrumb } from '../components/Breadcrumb'
+import { StructuredData } from '../components/StructuredData'
 import { useScrollToResult } from '../hooks/useScrollToResult'
 import { calculateTile } from '../calc/tile'
 import type { TileResult } from '../calc/tile'
@@ -61,6 +63,12 @@ export function TilePage() {
         description="施工面のサイズとタイル寸法・目地幅から必要枚数と目地材の量を自動計算。予備分（+10%）も加算。キッチン・洗面のDIYタイル貼りに。"
         path="/tile"
       />
+      <StructuredData
+        title="タイル必要枚数計算 | 内装材料カリキュレーター"
+        description="施工面のサイズとタイル寸法・目地幅から必要枚数と目地材の量を自動計算。予備分（+10%）も加算。キッチン・洗面のDIYタイル貼りに。"
+        path="/tile"
+      />
+      <Breadcrumb items={[{ label: 'タイル必要枚数計算', path: '/tile' }]} />
       <h1 className={styles.title}>タイル必要枚数計算</h1>
       <p className={styles.description}>
         施工面のサイズとタイルの寸法・目地幅を入力して、必要な枚数と目地材の量を計算します。

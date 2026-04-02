@@ -88,6 +88,19 @@
   align-items: center;
 }
 
+.footerRelated {
+  font-size: 13px;
+}
+
+.footerRelated a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.footerRelated a:hover {
+  text-decoration: underline;
+}
+
 .footerLink {
   color: var(--color-text-secondary);
   font-size: 13px;

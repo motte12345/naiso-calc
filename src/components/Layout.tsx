@@ -35,6 +35,12 @@ export function Layout() {
         <Outlet />
       </main>
       <footer className={styles.footer}>
+        <p className={styles.footerRelated}>
+          関連ツール:{' '}
+          <a href="https://hikkoshi-sim.pages.dev/" target="_blank" rel="noopener noreferrer">
+            引越し費用シミュレーター
+          </a>
+        </p>
         <p>&copy; 2026 内装材料カリキュレーター</p>
         <Link to="/about" className={styles.footerLink}>サイトについて・免責事項</Link>
       </footer>

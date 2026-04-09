@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://naiso-calc.pages.dev/sitemap.xml
+Sitemap: https://naiso.simtool.dev/sitemap.xml

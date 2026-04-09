@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://naiso-calc.pages.dev/</loc>
+    <loc>https://naiso.simtool.dev/</loc>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://naiso-calc.pages.dev/wallpaper</loc>
+    <loc>https://naiso.simtool.dev/wallpaper</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://naiso-calc.pages.dev/flooring</loc>
+    <loc>https://naiso.simtool.dev/flooring</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://naiso-calc.pages.dev/tile</loc>
+    <loc>https://naiso.simtool.dev/tile</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://naiso-calc.pages.dev/paint</loc>
+    <loc>https://naiso.simtool.dev/paint</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://naiso-calc.pages.dev/about</loc>
+    <loc>https://naiso.simtool.dev/about</loc>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

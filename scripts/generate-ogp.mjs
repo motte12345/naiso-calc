@@ -80,7 +80,7 @@ const svg = `
           font-size="22" fill="#ffffff" opacity="0.8">DIY・リフォームの材料計算を無料でサポート</text>
     <text x="${WIDTH / 2}" y="80" text-anchor="middle"
           font-family="'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif"
-          font-size="18" fill="#ffffff" opacity="0.5">naiso-calc.pages.dev</text>
+          font-size="18" fill="#ffffff" opacity="0.5">naiso.simtool.dev</text>
   </g>
 </svg>
 `

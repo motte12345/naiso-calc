@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import styles from './Breadcrumb.module.css'
 
-const BASE_URL = 'https://naiso-calc.pages.dev'
+const BASE_URL = 'https://naiso.simtool.dev'
 
 type BreadcrumbItem = {
   readonly label: string

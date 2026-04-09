@@ -1,4 +1,4 @@
-const BASE_URL = 'https://naiso-calc.pages.dev'
+const BASE_URL = 'https://naiso.simtool.dev'
 
 type Props = {
   readonly title: string

@@ -7,7 +7,7 @@ type Props = {
 }
 
 const SITE_NAME = '内装材料カリキュレーター'
-const BASE_URL = 'https://naiso-calc.pages.dev'
+const BASE_URL = 'https://naiso.simtool.dev'
 
 export function PageHead({ title, description, path }: Props) {
   const fullTitle = path === '/' ? SITE_NAME : `${title} | ${SITE_NAME}`
